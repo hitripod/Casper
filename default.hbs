@@ -74,7 +74,24 @@
             </div>
 
             <nav class="gh-head-menu">
-                {{navigation}}
+                <ul class="nav">
+                    {{#navigation}}
+                    <li class="nav-{{slug}}{{#if current}} nav-current{{/if}}"><a href="{{url}}">{{label}}</a></li>
+                    {{/navigation}}
+                    <li class="nav-categories">
+                        <a href="#">
+                            所有分類
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+                        </a>
+                        <ul class="categories-dropdown">
+                            {{#get "tags" limit="10" order="count.posts desc" include="count.posts"}}
+                                {{#foreach tags}}
+                                <li><a href="{{url}}">{{name}}<span class="tag-count">{{count.posts}}</span></a></li>
+                                {{/foreach}}
+                            {{/get}}
+                        </ul>
+                    </li>
+                </ul>
                 {{#unless @site.members_enabled}}
                     {{#match @custom.navigation_layout "Stacked"}}
                         <button class="gh-search gh-icon-btn" aria-label="Search this site" data-ghost-search>{{> "icons/search"}}</button>

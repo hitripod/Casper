@@ -449,7 +449,7 @@ production stylesheet in assets/built/screen.css
     display: inline-flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 32px;
+    gap: 8px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -464,10 +464,49 @@ production stylesheet in assets/built/screen.css
     display: inline-block;
     line-height: 1.7;
     color: inherit;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.gh-head-menu .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: var(--ghost-accent-color);
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
 }
 
 .gh-head-menu .nav a:hover {
-    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.gh-head-menu .nav a:hover::after {
+    transform: scaleX(1);
+}
+
+.gh-head-menu .nav li.nav-current a {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.gh-head-menu .nav li.nav-current a::after {
+    transform: scaleX(1);
+}
+
+/* Dark mode / non-cover nav hover */
+html.dark-mode .gh-head-menu .nav a:hover,
+body:not(.has-cover) .gh-head-menu .nav a:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+html.dark-mode .gh-head-menu .nav li.nav-current a,
+body:not(.has-cover) .gh-head-menu .nav li.nav-current a {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .gh-head-menu .nav-more-toggle {
@@ -542,6 +581,124 @@ production stylesheet in assets/built/screen.css
 
 .is-dropdown-mega .gh-dropdown li a {
     padding: 8px 0;
+}
+
+
+/* Categories Dropdown
+/* ---------------------------------------------------------- */
+
+.gh-head-menu .nav .nav-categories {
+    position: relative;
+}
+
+.gh-head-menu .nav .nav-categories > a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.gh-head-menu .nav .nav-categories > a svg {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.2s ease;
+}
+
+.gh-head-menu .nav .nav-categories:hover > a svg {
+    transform: rotate(180deg);
+}
+
+.categories-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    z-index: 100;
+    min-width: 220px;
+    padding: 12px 0;
+    margin-top: 8px;
+    opacity: 0;
+    visibility: hidden;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    list-style: none;
+}
+
+.categories-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #fff;
+}
+
+.gh-head-menu .nav .nav-categories:hover .categories-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.categories-dropdown li {
+    margin: 0;
+    padding: 0;
+}
+
+.categories-dropdown li a {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px !important;
+    color: #15171a !important;
+    font-size: 1.4rem;
+    font-weight: 500;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.categories-dropdown li a::after {
+    display: none !important;
+}
+
+.categories-dropdown li a:hover {
+    background: #f5f5f5 !important;
+}
+
+.categories-dropdown li a .tag-count {
+    font-size: 1.2rem;
+    color: #738a94;
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+html.dark-mode .categories-dropdown,
+html.auto-color .categories-dropdown {
+    background: #2a2d30;
+}
+
+html.dark-mode .categories-dropdown::before,
+html.auto-color .categories-dropdown::before {
+    border-bottom-color: #2a2d30;
+}
+
+html.dark-mode .categories-dropdown li a,
+html.auto-color .categories-dropdown li a {
+    color: #fff !important;
+}
+
+html.dark-mode .categories-dropdown li a:hover,
+html.auto-color .categories-dropdown li a:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark-mode .categories-dropdown li a .tag-count,
+html.auto-color .categories-dropdown li a .tag-count {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 
@@ -957,13 +1114,39 @@ production stylesheet in assets/built/screen.css
 .post-card-tags {
     display: flex;
     align-items: center;
-    gap: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
     margin: 0 0 10px;
     color: var(--color-secondary-text);
     font-size: 1.4rem;
     font-weight: 600;
     letter-spacing: -0.005em;
     line-height: 1;
+}
+
+.post-card-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.post-card-tag:hover {
+    background: var(--ghost-accent-color);
+    color: #fff;
+}
+
+.post-card-tag a {
+    color: inherit;
+}
+
+html.dark-mode .post-card-tag {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+html.dark-mode .post-card-tag:hover {
+    background: var(--ghost-accent-color);
 }
 
 .post-card-featured {
